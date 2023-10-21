@@ -12,6 +12,12 @@ if (!_U) {
   process.exit(1);
 }
 
+const ANON = process.env.ANON;
+if (!_U) {
+  console.error('Missing `ANON` environment variable.');
+  process.exit(1);
+}
+
 const MAX_CONCURRENCY = process.env.MAX_CONCURRENCY
   ? parseInt(process.env.MAX_CONCURRENCY)
   : 4;
@@ -21,12 +27,13 @@ const MAX_CONCURRENCY = process.env.MAX_CONCURRENCY
     concurrency: Cluster.CONCURRENCY_CONTEXT,
     maxConcurrency: MAX_CONCURRENCY,
     puppeteerOptions: {
-      headless: 'new'
+      headless: false
     }
   });
 
   await cluster.task(async ({ page, data: query }) => {
     await page.setCookie({ name: '_U', value: _U, domain: 'www.bing.com' });
+    await page.setCookie({ name: 'ANON', value: ANON, domain: 'www.bing.com' });
 
     await page.goto(
       'https://www.bing.com/images/create?q=' + encodeURIComponent(query)
