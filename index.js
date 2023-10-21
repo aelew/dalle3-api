@@ -27,6 +27,7 @@ const MAX_CONCURRENCY = process.env.MAX_CONCURRENCY
     concurrency: Cluster.CONCURRENCY_CONTEXT,
     maxConcurrency: MAX_CONCURRENCY,
     puppeteerOptions: {
+      args: ['--disable-blink-features=AutomationControlled'],
       headless: 'new'
     }
   });
