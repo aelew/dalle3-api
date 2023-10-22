@@ -7,6 +7,9 @@
     "start": "node .",
     "heroku-postbuild": "bash postbuild.bash"
   },
+  "engines": {
+    "node": "18.x"
+  },
   "keywords": [],
   "author": "aelew",
   "license": "MIT",
