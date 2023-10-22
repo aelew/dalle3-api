@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
-    "heroku-postbuild": "mkdir ./.cache && mv /app/.cache/puppeteer ./.cache"
+    "start": "node ."
   },
   "keywords": [],
   "author": "aelew",
