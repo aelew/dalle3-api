@@ -69,6 +69,10 @@ const MAX_CONCURRENCY = process.env.MAX_CONCURRENCY
   });
 
   app.get('/generate', async function (req, res) {
+    if (process.env.AUTH && req.headers['authorization'] !== process.env.AUTH) {
+      return res.status(401).json({ success: false, error: 'unauthorized' });
+    }
+
     const query = req.query.q;
     if (!query) {
       return res.status(400).json({ success: false, error: 'invalid_query' });
