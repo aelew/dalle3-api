@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ."
+    "start": "node .",
+    "build": "node node_modules/puppeteer/install.mjs && mkdir -p ./.cache && mv /app/.cache/puppeteer ./.cache"
   },
   "engines": {
     "node": "18.x"
