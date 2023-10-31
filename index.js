@@ -40,16 +40,26 @@ const MAX_CONCURRENCY = process.env.MAX_CONCURRENCY
       'https://www.bing.com/images/create?q=' + encodeURIComponent(query)
     );
 
-    await page.waitForXPath("//img[@class='mimg']", {
-      timeout: 60000,
-      visible: true
-    });
+    await Promise.race([
+      page.waitForXPath("//img[@class='mimg']", {
+        timeout: 60000,
+        visible: true
+      }),
+      page.waitForXPath("//img[@class='gil_err_img rms_img']", {
+        timeout: 60000,
+        visible: true
+      })
+    ]);
 
     // Ensure all images are loaded (just in case)
     new Promise((r) => setTimeout(r, 1000));
 
-    const elements = await page.$$('.mimg');
     const images = [];
+
+    const elements = await page.$$('.mimg');
+    if (!elements.length) {
+      return images;
+    }
 
     await new Promise((resolve) => {
       elements.forEach(async (img, i) => {
